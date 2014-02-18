@@ -50,7 +50,7 @@
                     <color key="tintColor" red="0.2286019959919556" green="0.23406825990157543" blue="0.25046705163043481" alpha="1" colorSpace="calibratedRGB"/>
                 </view>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Total:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rno-z7-6XL">
-                    <rect key="frame" x="20" y="164" width="42" height="21"/>
+                    <rect key="frame" x="20" y="164" width="70" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="highlightedColor"/>
@@ -69,6 +69,9 @@
                         <segment title="15%"/>
                         <segment title="20%"/>
                     </segments>
+                    <connections>
+                        <action selector="onTap:" destination="-1" eventType="valueChanged" id="VlR-lk-HjQ"/>
+                    </connections>
                 </segmentedControl>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>

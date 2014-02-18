@@ -7,6 +7,7 @@
 //
 
 #import "TipViewController.h"
+#import "SettingsViewController.h"
 
 @interface TipViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *billTextField;
@@ -15,6 +16,9 @@
 @property (weak, nonatomic) IBOutlet UISegmentedControl *tipControl;
 - (IBAction)onTap:(id)sender;
 
+- (void) updateValues;
+- (void) onSettingsButton;
+- (float) getDefaultTipPercentage;
 @end
 
 @implementation TipViewController
@@ -31,7 +35,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    [self updateValues];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Settings" style:UIBarButtonItemStylePlain target:self action:@selector(onSettingsButton)];
 }
 
 - (void)didReceiveMemoryWarning
@@ -42,5 +47,41 @@
 
 - (IBAction)onTap:(id)sender {
     [self.view endEditing:YES];
+    [self updateValues];
+}
+
+- (void)updateValues {
+    float billAmount = [self.billTextField.text floatValue];
+    
+    NSArray *tipValues = @[@(0.1), @(0.15), @(0.2)];
+    
+    float defaultTip = [self getDefaultTipPercentage];
+
+    float tipAmount;
+    if(defaultTip != 0)
+    {
+        tipAmount = billAmount * (defaultTip/100);
+    }
+    else
+    {
+        tipAmount = billAmount * [tipValues[self.tipControl.selectedSegmentIndex] floatValue];
+
+    }
+    
+    float totalAmount = billAmount + tipAmount;
+    
+    self.tipLabel.text = [NSString stringWithFormat:@"$%0.2f", tipAmount];
+    self.totalLabel.text = [NSString stringWithFormat:@"$%0.2f", totalAmount];
+    
+}
+
+- (void)onSettingsButton {
+    [self.navigationController pushViewController:[[SettingsViewController alloc] init] animated:YES];
+}
+
+- (float)getDefaultTipPercentage {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    float defaultTip = [defaults floatForKey:@"defaultTip"];
+    return defaultTip;
 }
 @end
